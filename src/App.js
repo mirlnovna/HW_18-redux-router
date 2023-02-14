@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/header/Header";
+import Auth from "./components/auth/Auth";
+import TodoList from "./components/todo-llist/TodoList";
 
 function App() {
+  const [logged, setIsLogged] = useState(false);
+
+  const submitHandler = () => {
+    setIsLogged((prevState) => !prevState);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <Header logged={logged} onSubmit={submitHandler} />
+      <Routes>
+        <Route path="/" element={<Auth onSubmit={submitHandler} />} />
+        <Route path="/home" element={<TodoList />} />
+      </Routes>
     </div>
   );
 }
